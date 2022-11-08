@@ -37,13 +37,13 @@ class CollegeController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'college_name' => 'college_name|string',
+            'name' => 'name|string',
             
 
         ]);
 
         $college= College::create([
-            'college_name' => $fields['college_name'],
+            'name' => $fields['name'],
             
 
 
@@ -65,7 +65,10 @@ class CollegeController extends Controller
     public function show($id)
     {
         $college=College::find($id);
-        return $college;
+        return 
+        [
+            $college,
+            "college not found"];
         
     }
 
