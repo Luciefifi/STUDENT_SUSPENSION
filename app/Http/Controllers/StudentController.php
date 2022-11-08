@@ -26,31 +26,32 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'fname' => 'required|string',
-            'lname' => 'required|string',
+            'firstName' => 'required|string',
+            'lastName' => 'required|string',
             'email' => 'required|email',
             'telephone' => 'required',
             'regNumber' => 'required',
             'gender' => 'required|string',
-            'department_id' => 'required|string'
+            'program_id' => 'required'
 
         ]);
 
         $student = Student::create([
-            'fname' => $fields['fname'],
-            'lname' => $fields['lname'],
+            'firstName' => $fields['firstName'],
+            'lastName' => $fields['lastName'],
             'email' => $fields['email'],
             'telephone' => $fields['telephone'],
             'regNumber' => $fields['regNumber'],
             'gender' => $fields['gender'],
-            'department_id'=>$fields['department_id'],
+            'program_id'=>$fields['program_id'],
 
 
         ]);
 
         return [
             'message' => 'student created!',
-            'student' => $student
+            'student' => $student,
+            
         ];
     }
 

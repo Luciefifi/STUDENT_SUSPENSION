@@ -15,17 +15,15 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('fname');
-            $table->string('lname');
+            $table->unsignedBigInteger('program_id');
+            $table->string('firstName');
+            $table->string('lastName');
             $table->string('email');
-            $table->string('telephone');
             $table->string('regNumber');
-            $table->string('department_id');
+            $table->string('telephone');
             $table->string('gender');
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
- 
-          
+            $table->timestamps();
+            $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');
         });
     }
 

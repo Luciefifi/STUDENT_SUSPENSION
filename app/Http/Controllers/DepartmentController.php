@@ -43,8 +43,23 @@ class DepartmentController extends Controller
     {
         $department = $request->validate([
             'departmentname' => 'required|string',
-            'department_id' => 'required|string'
+            'school_id' => 'required'
+
         ]);
+
+        $department = Department::create([
+            'departmentname' => $department['departmentname'],
+            'school_id' => $department['school_id'],
+            
+
+
+        ]);
+
+        return [
+            'message' => 'department created!',
+            'department' => $department,
+            
+        ];
     }
 
     /**
@@ -55,7 +70,11 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        //
+        {
+            $department=Department::find($id);
+            return $department;
+            
+        }
     }
 
     /**
