@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\School;
 use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class SchoolController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,24 +14,18 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return Department::all();
+        return School::all();
     }
-
-   
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create()
-    // {
-    //  $department = Department :: create([
-    //     'departmentname' => $department['departmentname'],
-    //     'department_id' => $department['department_id'],
-
-    //  ]);
-    // }
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -41,23 +35,22 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $department = $request->validate([
-            'department_name' => 'required|string',
-            'school_id' => 'required'
+        $fields = $request->validate([
+            'school_name' => 'required|string',
+           
 
         ]);
 
-        $department = Department::create([
-            'department_name' => $department['department_name'],
-            'school_id' => $department['school_id'],
+        $school = School::create([
+            'school_name' => $fields['school_name'],
             
 
 
         ]);
 
         return [
-            'message' => 'department created!',
-            'department' => $department,
+            'message' => 'school created!',
+            'school' => $school,
             
         ];
     }
@@ -70,11 +63,8 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        {
-            $department=Department::find($id);
-            return $department;
-            
-        }
+        $school=School::find($id);
+        return $school;
     }
 
     /**
@@ -97,16 +87,15 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $department=Department::find($id);
-        if($department){
+        $school=School::find($id);
+        if($school){
             $updates=$request->all();
-            $department->update($updates);
-            return $department;
+            $school->update($updates);
+            return $school;
         }
         else{
-            return 'department not found';
+            return 'school not found';
         }
-
     }
 
     /**
@@ -117,15 +106,14 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        $department=Department::find($id);
-        if ($department)
+        $school=School::find($id);
+        if ($school)
         {
-            Department::destroy($id);
-            return 'department deleted successfully';
+            School::destroy($id);
+            return 'school deleted successfully';
         }
         else{
-            return 'department not found';
+            return 'school not found';
         }
-        
     }
 }

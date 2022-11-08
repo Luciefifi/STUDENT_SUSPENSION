@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Department;
+use App\Models\Program;
 use Illuminate\Http\Request;
 
-class DepartmentController extends Controller
+class ProgramController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,24 +14,18 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return Department::all();
+        return Program::all();
     }
-
-   
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create()
-    // {
-    //  $department = Department :: create([
-    //     'departmentname' => $department['departmentname'],
-    //     'department_id' => $department['department_id'],
-
-    //  ]);
-    // }
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -41,23 +35,26 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        $department = $request->validate([
-            'department_name' => 'required|string',
-            'school_id' => 'required'
+        $fields = $request->validate([
+            'program_name' => 'required|string',
+            'lastName' => 'required|string',
+            'email' => 'required|email',
+            'telephone' => 'required',
+            'regNumber' => 'required',
+            'gender' => 'required|string',
+            'program_id' => 'required'
 
         ]);
 
-        $department = Department::create([
-            'department_name' => $department['department_name'],
-            'school_id' => $department['school_id'],
-            
-
+        $program = Program::create([
+            'program_name' => $fields['program_name'],
+           
 
         ]);
 
         return [
-            'message' => 'department created!',
-            'department' => $department,
+            'message' => 'program created!',
+            'program' => $program,
             
         ];
     }
@@ -70,11 +67,8 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        {
-            $department=Department::find($id);
-            return $department;
-            
-        }
+        $program=Program::find($id);
+        return $program;
     }
 
     /**
@@ -97,14 +91,14 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $department=Department::find($id);
-        if($department){
+        $program=Program::find($id);
+        if($program){
             $updates=$request->all();
-            $department->update($updates);
-            return $department;
+            $program->update($updates);
+            return $program;
         }
         else{
-            return 'department not found';
+            return 'program not found';
         }
 
     }
@@ -117,15 +111,14 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        $department=Department::find($id);
-        if ($department)
+        $program=Program::find($id);
+        if ($program)
         {
-            Department::destroy($id);
-            return 'department deleted successfully';
+            Program::destroy($id);
+            return 'program deleted successfully';
         }
         else{
-            return 'department not found';
+            return 'program not found';
         }
-        
     }
 }
