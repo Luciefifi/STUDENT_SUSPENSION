@@ -37,17 +37,12 @@ class ProgramController extends Controller
     {
         $fields = $request->validate([
             'program_name' => 'required|string',
-            'lastName' => 'required|string',
-            'email' => 'required|email',
-            'telephone' => 'required',
-            'regNumber' => 'required',
-            'gender' => 'required|string',
-            'program_id' => 'required'
-
+           'department_id' => 'required'
         ]);
 
         $program = Program::create([
             'program_name' => $fields['program_name'],
+            'department_id' => $fields['department_id']
            
 
         ]);

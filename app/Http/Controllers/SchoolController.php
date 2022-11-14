@@ -37,13 +37,14 @@ class SchoolController extends Controller
     {
         $fields = $request->validate([
             'school_name' => 'required|string',
+            'college_id' => 'required'
            
 
         ]);
 
         $school = School::create([
             'school_name' => $fields['school_name'],
-            
+            'college_id' => $fields['college_id'],
 
 
         ]);

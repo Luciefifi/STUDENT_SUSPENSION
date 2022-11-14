@@ -37,9 +37,8 @@ class CollegeController extends Controller
     public function store(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'name|string',
+            'name' => 'required|string',
             
-
         ]);
 
         $college= College::create([
