@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ProgramController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['role:admin|HOD|student']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -39,6 +44,8 @@ class ProgramController extends Controller
             'program_name' => 'required|string',
            'department_id' => 'required'
         ]);
+        if ($request->user()->can('create-department'))
+        {
 
         $program = Program::create([
             'program_name' => $fields['program_name'],
@@ -52,6 +59,12 @@ class ProgramController extends Controller
             'program' => $program,
             
         ];
+    }
+    else{
+        return[
+            'message' => 'you are not permitted to create department'
+        ];
+    }
     }
 
     /**

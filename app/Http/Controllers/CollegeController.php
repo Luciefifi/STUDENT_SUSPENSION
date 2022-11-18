@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\College;
-use App\Models\Department;
 use Illuminate\Http\Request;
 
 class CollegeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:admin|HOD|student']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -34,25 +37,33 @@ class CollegeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
-        $fields = $request->validate([
-            'name' => 'required|string',
-            
-        ]);
+        if ($request->user()->can('create-college')) {
 
-        $college= College::create([
-            'name' => $fields['name'],
-            
+            $fields = $request->validate([
+                'name' => 'required|string',
+
+            ]);
+
+            $college = College::create([
+                'name' => $fields['name'],
 
 
-        ]);
 
-        return [
-            'message' => 'college created!',
-            'college' => $college,
-            
-        ];
+            ]);
+
+            return [
+                'message' => 'college created!',
+                'college' => $college,
+
+            ];
+        } else {
+            return [
+                'message' => 'you are not permitted to create a college'
+            ];
+        }
     }
 
     /**
@@ -63,12 +74,12 @@ class CollegeController extends Controller
      */
     public function show($id)
     {
-        $college=College::find($id);
-        return 
-        [
-            $college,
-            "college not found"];
-        
+        $college = College::find($id);
+        return
+            [
+                $college,
+                "college not found"
+            ];
     }
 
     /**
@@ -91,13 +102,12 @@ class CollegeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $college=College::find($id);
-        if($college){
-            $updates=$request->all();
+        $college = College::find($id);
+        if ($college) {
+            $updates = $request->all();
             $college->update($updates);
             return $college;
-        }
-        else{
+        } else {
             return 'college not found';
         }
     }
@@ -110,13 +120,11 @@ class CollegeController extends Controller
      */
     public function destroy($id)
     {
-        $college=College::find($id);
-        if ($college)
-        {
- College::destroy($id);
+        $college = College::find($id);
+        if ($college) {
+            College::destroy($id);
             return 'college deleted successfully';
-        }
-        else{
+        } else {
             return 'college not found';
         }
     }

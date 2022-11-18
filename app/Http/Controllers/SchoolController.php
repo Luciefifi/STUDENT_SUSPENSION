@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class SchoolController extends Controller
 {
+
+    public function __construct()
+    {
+      $this->middleware(['role:admin|HOD|student']) ; 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -41,6 +46,10 @@ class SchoolController extends Controller
            
 
         ]);
+        if($request->user()->can('create-school'))
+        {
+
+        
 
         $school = School::create([
             'school_name' => $fields['school_name'],
@@ -54,6 +63,13 @@ class SchoolController extends Controller
             'school' => $school,
             
         ];
+    }
+    else{
+        return[
+            'message'=>'you do not have this permission'
+        ];
+    }
+    
     }
 
     /**

@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['role:admin|HOD|student']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -35,6 +40,9 @@ class StudentController extends Controller
             'program_id' => 'required'
 
         ]);
+        if($request->user()->can('create-program'))
+{
+
 
         $student = Student::create([
             'firstName' => $fields['firstName'],
@@ -53,6 +61,8 @@ class StudentController extends Controller
             'student' => $student,
             
         ];
+    }
+
     }
 
     /**

@@ -15,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
     
     //use HasRoles;
    // $role = Role::create(['name' => 'edit']);
@@ -31,9 +31,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'post',
+        'user_type',
         'email',
         'password',
+        'image'
     ];
 
     /**

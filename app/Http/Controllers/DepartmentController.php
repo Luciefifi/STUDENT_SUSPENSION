@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['role:admin|HOD|student']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +22,7 @@ class DepartmentController extends Controller
         return Department::all();
     }
 
-   
+
 
     /**
      * Show the form for creating a new resource.
@@ -44,22 +49,28 @@ class DepartmentController extends Controller
         $department = $request->validate([
             'department_name' => 'required|string',
             'school_id' => 'required'
-
         ]);
-
-        $department = Department::create([
-            'department_name' => $department['department_name'],
-            'school_id' => $department['school_id'],
-            
+        if ($request->user()->can('create-department')) {
 
 
-        ]);
+            $department = Department::create([
+                'department_name' => $department['department_name'],
+                'school_id' => $department['school_id'],
 
-        return [
-            'message' => 'department created!',
-            'department' => $department,
-            
-        ];
+
+
+            ]);
+
+            return [
+                'message' => 'department created!',
+                'department' => $department,
+
+            ];
+        } else {
+            return [
+                'message' => 'you are not allowed to create department '
+            ];
+        }
     }
 
     /**
@@ -69,11 +80,9 @@ class DepartmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        {
-            $department=Department::find($id);
+    { {
+            $department = Department::find($id);
             return $department;
-            
         }
     }
 
@@ -97,16 +106,14 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $department=Department::find($id);
-        if($department){
-            $updates=$request->all();
+        $department = Department::find($id);
+        if ($department) {
+            $updates = $request->all();
             $department->update($updates);
             return $department;
-        }
-        else{
+        } else {
             return 'department not found';
         }
-
     }
 
     /**
@@ -117,15 +124,12 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-        $department=Department::find($id);
-        if ($department)
-        {
+        $department = Department::find($id);
+        if ($department) {
             Department::destroy($id);
             return 'department deleted successfully';
-        }
-        else{
+        } else {
             return 'department not found';
         }
-        
     }
 }
