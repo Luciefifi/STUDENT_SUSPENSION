@@ -9,7 +9,7 @@ class CollegeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role:admin|HOD|student']);
+        $this->middleware(['role:Admin|HOD|student']);
     }
     /**
      * Display a listing of the resource.

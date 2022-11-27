@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\loginController;
+use App\Http\Controllers\userController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,11 +20,50 @@ use Illuminate\Support\Facades\Route;
     //return view('index1');
 //});
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/', function(){
+//     return view('index');
+// });
+
+// Route::get('/', [loginController::class, 'login']);
+// 
+
+
+
+
+Route::get('/login', function () {
+    return view('login');
+    
+})->name('login');
+
+Route::get('/registerStudent', function () {
+    return view('registerStudent');
 });
 
-Route::get('/', function(){
-    return view('index');
+Route::post('/login',[userController::class,'login'])->name('user.login');
+
+
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    
+    Route::get('/admin', function () {
+    return view('admin');
 });
-?>
+
+Route::get('/colleges', function () {
+    return view('college');
+});
+
+Route::get('/createCollege', function () {
+    return view('createCollege');
+}); 
+
+});
+
+
+
+
+
+

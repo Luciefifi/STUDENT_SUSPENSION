@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::delete('/students/{id}',[StudentController::class,'destroy']);
 
 Route::post('/user/signup', [UserController::class, 'store']);
-
+Route::post('/login' ,[UserController::class,'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/students', StudentController::class);
@@ -42,4 +42,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/student/signup', [UserController::class, 'store_student']);
     Route::post('/colleges',[CollegeController::class,'store']);
     Route::post('/schools' ,[SchoolController::class,'store']);
+    
 });

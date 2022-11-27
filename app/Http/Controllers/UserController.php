@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -72,7 +74,7 @@ class UserController extends Controller
             'name' => $fields['name'],
             'email' => $fields['email'],
             'user_type' => $fields['user_type'],
-            'password' => $fields['password'],
+            'password' =>  Hash::make($fields['password']),  
             'image' => null
         ]);
         $user->assignRole($fields['user_type']);
@@ -142,5 +144,37 @@ class UserController extends Controller
         } else {
             return 'user not found';
         }
+    }
+    public function login(request $request)
+    {
+        $fields = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+
+        $is_api_request = $request->route()->getPrefix() === 'api';
+       
+        $user = User::where('email', $fields['email'])->first();
+        if (!$user || !Hash::check($fields['password'], $user->password)) {
+            return [
+                'message' => 'invalid credentials'
+            ];
+        }
+        
+        if( $is_api_request)
+        {
+        $token = $user->createToken('myapptoken')->plainTextToken;
+        return [
+            'message' => 'user logged in',
+            'token' => $token
+        ];
+    }
+
+    else{
+        $request->session()->regenerate();
+            Auth::login($user);
+            return redirect('/admin');
+    }
     }
 }
