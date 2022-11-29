@@ -60,6 +60,49 @@
                         
                         </ul>
 
+
+                        <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Schools <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="/schools">All  Schools</a></li>
+                            <li><a href="/createSchool">create School</a></li>
+
+                        
+                        </ul>
+
+                        <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Departments <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="/departments">All Departments</a></li>
+                            <li><a href="/createDepartment">create Department</a></li>
+
+                        
+                        </ul>
+
+
+                        <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Programs <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="/programs">All Programs</a></li>
+                            <li><a href="/createProgram">create Program</a></li>
+
+                        
+                        </ul>
+
+                        <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Students<span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="/Students">All students</a></li>
+                            <li><a href="/createStudent">create Student</a></li>
+
+                        
+                        </ul>
+
+
+                        <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Users<span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="/Users">All user</a></li>
+                            <li><a href="/createUser">create User</a></li>
+
+                        
+                        </ul>
+
             
                 </ul>
                 </li>
