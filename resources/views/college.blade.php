@@ -23,36 +23,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($colleges as $college )
                         <tr>
-                            <th scope="row">1</th>
-                            <td>College of Science and Technology</td>
+                            <th scope="row">{{ $college->id }}</th>
+                            <td>{{ $college->name }}</td>
 
                             <td class="color-primary">
+                                
                                 <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
-
+                                <a href="/colleges/{{ $college->id }}"  class="btn btn-danger btn-outline m-b-10 m-l-5"> Delete</a>
                             </td>
                         </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>College of Science and Technology</td>
-
-                            <td class="color-primary">
-                                <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>College of Science and Technology</td>
-
-                            <td class="color-primary">
-                                <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
-
-                            </td>
-                        </tr>
+                        @endforeach
+                        
                     </tbody>
                 </table>
             </div>

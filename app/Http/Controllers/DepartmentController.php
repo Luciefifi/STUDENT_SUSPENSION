@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\College;
 use App\Models\Department;
+use App\Models\School;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -17,6 +19,23 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+     
+public function school_create()
+{
+
+    $colleges=College::all();
+    
+    return view('createSchool',compact('colleges'));
+}
+
+public function department_create()
+{
+    $schools=School::all();
+    
+    return view('createDepartment',compact('schools'));  
+}
     public function index()
     {
         return Department::all();
@@ -79,6 +98,13 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+    public function department_show()
+    {
+        $departments = Department::all();
+        return view('departments', compact('departments'));
+    }
     public function show($id)
     { {
             $department = Department::find($id);

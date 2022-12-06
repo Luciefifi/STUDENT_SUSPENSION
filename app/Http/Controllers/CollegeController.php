@@ -16,6 +16,15 @@ class CollegeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function college_show()
+    {
+
+        $colleges = College::all();
+
+        return view('college', compact('colleges'));
+    }
+
     public function index()
     {
         return College::all();
@@ -40,25 +49,30 @@ class CollegeController extends Controller
 
     public function store(Request $request)
     {
+        $is_api_request = $request->route()->getPrefix() === 'api';
+
         if ($request->user()->can('create-college')) {
 
             $fields = $request->validate([
-                'name' => 'required|string',
-
+                'name' => 'required|string|unique:colleges,name',
             ]);
+
+            // if ($fields->fails()) {
+            //     return back()->withErrors($fields);
+            // }
 
             $college = College::create([
                 'name' => $fields['name'],
-
-
-
             ]);
 
-            return [
-                'message' => 'college created!',
-                'college' => $college,
-
-            ];
+            if ($is_api_request) {
+                return [
+                    'message' => 'college created!',
+                    'college' => $college,
+                ];
+            } else {
+                return back()->with(['message', 'college created!']);
+            }
         } else {
             return [
                 'message' => 'you are not permitted to create a college'
@@ -126,6 +140,18 @@ class CollegeController extends Controller
             return 'college deleted successfully';
         } else {
             return 'college not found';
+        }
+    }
+
+
+    public function remove($id, Request $request)
+    {
+        if ($request->user()->can('delete-college')) {
+            $college = College::find($id);
+            if ($college) {
+                College::destroy($id);
+                return back()->with(['message', 'college deleted!']);
+            }
         }
     }
 }

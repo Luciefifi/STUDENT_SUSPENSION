@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\College;
 use App\Models\School;
 use Illuminate\Http\Request;
 
@@ -10,13 +11,23 @@ class SchoolController extends Controller
 
     public function __construct()
     {
-      $this->middleware(['role:admin|HOD|student']) ; 
+      $this->middleware(['role:Admin|HOD|student']) ; 
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+public function school_create()
+{
+
+    $colleges=College::all();
+    
+    return view('createSchool',compact('colleges'));
+}
+
+
     public function index()
     {
         return School::all();
@@ -40,12 +51,18 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
+        $is_api_request = $request->route()->getPrefix() === 'api';
+        
         $fields = $request->validate([
-            'school_name' => 'required|string',
+            'school_name' => 'required|string|unique:schools,school_name',
             'college_id' => 'required'
-           
-
         ]);
+
+        // if ($fields->fails()) {
+        //     return back()->withErrors($fields);
+        // }
+
+        
         if($request->user()->can('create-school'))
         {
 
@@ -58,11 +75,17 @@ class SchoolController extends Controller
 
         ]);
 
-        return [
-            'message' => 'school created!',
-            'school' => $school,
-            
-        ];
+        if($is_api_request){
+            return [
+                'message' => 'school created!',
+                'school' => $school,                
+            ];
+        }
+        else
+            {
+                return back()->with(['message','college created!']);
+            }
+        
     }
     else{
         return[
@@ -77,7 +100,17 @@ class SchoolController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * 
+     * 
+     * 
      */
+
+
+     public function school_show()
+     {
+         $schools = School::all();
+         return view('schools', compact('schools'));
+     }
     public function show($id)
     {
         $school=School::find($id);
@@ -131,6 +164,18 @@ class SchoolController extends Controller
         }
         else{
             return 'school not found';
+        }
+    }
+
+
+    public function remove($id, Request $request)
+    {
+        if ($request->user()->can('delete-school')) {
+            $school = School::find($id);
+            if ($school) {
+                School::destroy($id);
+                return back()->with(['message', 'school deleted!']);
+            }
         }
     }
 }
