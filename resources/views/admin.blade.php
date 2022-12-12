@@ -10,7 +10,7 @@
             <div class="col-lg-8 p-r-0 title-margin-right">
                 <div class="page-header">
                     <div class="page-title">
-                        <h1>Hello, <span>Welcome Here</span></h1>
+                        <h1>Hello, {{ Auth::user()->name }}</h1>
                     </div>
                 </div>
             </div>

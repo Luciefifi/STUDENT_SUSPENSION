@@ -13,18 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('suspensions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('program_id');
-            $table->string('firstName');
-            $table->string('lastName');
-            $table->string('email');
+            $table->string('fname');
+            $table->string('lname');
             $table->string('regNumber');
-            $table->string('password');
-            $table->string('telephone');
-            $table->string('gender');
+            $table->string('level');
+            $table->string('from');
+            $table->string('to');
+            $table->string('reasons');
+            $table->string('supporting_doc')->nullable();
             $table->timestamps();
-            $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');
         });
     }
 
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('suspensions');
     }
 };

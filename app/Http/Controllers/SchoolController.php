@@ -11,7 +11,7 @@ class SchoolController extends Controller
 
     public function __construct()
     {
-      $this->middleware(['role:Admin|HOD|student']) ; 
+        $this->middleware(['role:Admin|HOD|student']);
     }
     /**
      * Display a listing of the resource.
@@ -19,13 +19,13 @@ class SchoolController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-public function school_create()
-{
+    public function school_create()
+    {
 
-    $colleges=College::all();
-    
-    return view('createSchool',compact('colleges'));
-}
+        $colleges = College::all();
+
+        return view('createSchool', compact('colleges'));
+    }
 
 
     public function index()
@@ -52,7 +52,7 @@ public function school_create()
     public function store(Request $request)
     {
         $is_api_request = $request->route()->getPrefix() === 'api';
-        
+
         $fields = $request->validate([
             'school_name' => 'required|string|unique:schools,school_name',
             'college_id' => 'required'
@@ -62,37 +62,31 @@ public function school_create()
         //     return back()->withErrors($fields);
         // }
 
-        
-        if($request->user()->can('create-school'))
-        {
 
-        
-
-        $school = School::create([
-            'school_name' => $fields['school_name'],
-            'college_id' => $fields['college_id'],
+        if ($request->user()->can('create-school')) {
 
 
-        ]);
 
-        if($is_api_request){
+            $school = School::create([
+                'school_name' => $fields['school_name'],
+                'college_id' => $fields['college_id'],
+
+
+            ]);
+
+            if ($is_api_request) {
+                return [
+                    'message' => 'school created!',
+                    'school' => $school,
+                ];
+            } else {
+                return back()->with(['message', 'college created!']);
+            }
+        } else {
             return [
-                'message' => 'school created!',
-                'school' => $school,                
+                'message' => 'you do not have this permission'
             ];
         }
-        else
-            {
-                return back()->with(['message','college created!']);
-            }
-        
-    }
-    else{
-        return[
-            'message'=>'you do not have this permission'
-        ];
-    }
-    
     }
 
     /**
@@ -106,14 +100,14 @@ public function school_create()
      */
 
 
-     public function school_show()
-     {
-         $schools = School::all();
-         return view('schools', compact('schools'));
-     }
+    public function school_show()
+    {
+        $schools = School::all();
+        return view('schools', compact('schools'));
+    }
     public function show($id)
     {
-        $school=School::find($id);
+        $school = School::find($id);
         return $school;
     }
 
@@ -137,13 +131,12 @@ public function school_create()
      */
     public function update(Request $request, $id)
     {
-        $school=School::find($id);
-        if($school){
-            $updates=$request->all();
+        $school = School::find($id);
+        if ($school) {
+            $updates = $request->all();
             $school->update($updates);
             return $school;
-        }
-        else{
+        } else {
             return 'school not found';
         }
     }
@@ -156,13 +149,11 @@ public function school_create()
      */
     public function destroy($id)
     {
-        $school=School::find($id);
-        if ($school)
-        {
+        $school = School::find($id);
+        if ($school) {
             School::destroy($id);
             return 'school deleted successfully';
-        }
-        else{
+        } else {
             return 'school not found';
         }
     }
@@ -177,5 +168,27 @@ public function school_create()
                 return back()->with(['message', 'school deleted!']);
             }
         }
+    }
+
+    public function update_show($id)
+    {
+        $school = School::find($id);
+        $colleges = College::all();
+
+        return view('SchoolUpdate', compact('school', 'colleges'));
+    }
+    public function updated(Request $request)
+    {
+        $id = $request->id;
+        $fields = $request->validate([
+            'school_name' => 'required|string',
+            'college_id' => 'required'
+        ]);
+
+        $school = School::find($id);
+        $school->school_name = $fields['school_name'];
+        $school->college_id = $fields['college_id'];
+        $school->update();
+        return redirect('schools')->with(['message', 'school updated']);
     }
 }

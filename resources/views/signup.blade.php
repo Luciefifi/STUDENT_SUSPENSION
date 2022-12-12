@@ -39,13 +39,46 @@
                             <a href="index.html"><span>Student-suspension</span></a>
                         </div>
                         <div class="login-form">
-                            <h4> Login</h4>
-                            <form action="{{route('user.login')}}" method="POST">
+                            <h4> Sign-Up</h4>
+                            <form action="{{route('user.signup')}}" method="POST">
                                 @csrf
+                                <div class="form-group">
+                                    <label>First name</label>
+                                    <input type="text" class="form-control" name="fname" placeholder="First name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last name</label>
+                                    <input type="text" class="form-control" name="lname" placeholder="Last name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Registration number</label>
+                                    <input type="text" class="form-control" name="regNumber" placeholder="Registration number">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone number</label>
+                                    <input type="text" class="form-control" name="phone" placeholder="Phone">
+                                </div>
                                 <div class="form-group">
                                     <label>Email address</label>
                                     <input type="email" class="form-control" name="email" placeholder="Email">
                                 </div>
+                                <div class="form-group">
+                        <label>Program</label>
+                        <select class="form-control" name="program_id">
+                            @foreach($programs as $program)
+                                <option value={{ $program->id }}>{{ $program->program_name }}</option>
+                            @endforeach
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select class="form-control" name="gender">
+                            <option value='male'>Male</option>
+                            <option value='female'>Female</option>
+
+                        </select>
+                    </div>
                                 <div class="form-group">
                                     <label>Password</label>
                                     <input type="password" class="form-control" name="password" placeholder="Password">
@@ -59,13 +92,13 @@
                                     </label>
 
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Sign in</button>
+                                <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Sign up</button>
                                 <div class="social-login-content">
                                     <div class="social-button">
                                     </div>
                                 </div>
                                 <div class="register-link m-t-15 text-center">
-                                    <p>Don't have account ? <a href="/signup"> Sign Up Here</a></p>
+                                    <p>already have an account ? <a href="/login"> Login Here</a></p>
                                 </div>
                             </form>
                         </div>

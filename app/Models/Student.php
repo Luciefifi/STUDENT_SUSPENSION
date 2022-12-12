@@ -9,7 +9,7 @@ class Student extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'program_id' , 'firstName', 'lastName' , 'email' ,'regNumber' , 'telephone' , 'gender'];
+        'program_id' , 'firstName', 'lastName' , 'email' ,'regNumber' , 'telephone' , 'gender','password'];
 
     public function program(){
         return $this->belongsTo(program::class);

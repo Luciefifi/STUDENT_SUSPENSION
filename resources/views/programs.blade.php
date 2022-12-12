@@ -30,7 +30,7 @@
                     @foreach ($programs as $program)
                         <tr>
                         <th scope="row"> {{ $program->id }} </th>
-                        <td> {{ $program->school->school_name }} </td>
+                    
                         <td> {{ $program->department->department_name }}</td>
                         <td>{{$program->program_name}}</td>
 

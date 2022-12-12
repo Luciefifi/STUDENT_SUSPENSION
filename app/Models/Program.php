@@ -8,14 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Program extends Model
 {
     use HasFactory;
-    protected $fillable=[
-       'department_id' , 'program_name'];
-        public function department(){
-            return $this->belongsTo(Department::class);
-}
-public function student()
-{
+    protected $fillable = [
+        'department_id', 'program_name'
+    ];
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
+    public function student()
+    {
 
-return $this->hasMany(student::class);
-}
+        return $this->hasMany(student::class);
+    }
 }

@@ -8,6 +8,7 @@ use App\Models\Program;
 use App\Models\School;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -22,7 +23,7 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function student_create()
+    public function student_create()
     {
         $colleges = College::all();
         $schools = School::all();
@@ -30,7 +31,7 @@ class StudentController extends Controller
         $programs = Program::all();
 
 
-        return view('createProgram', compact('colleges', 'schools', 'departments' ,'programs'));
+        return view('createStudent', compact('colleges', 'schools', 'departments', 'programs'));
     }
     public function index()
     {
@@ -54,37 +55,33 @@ class StudentController extends Controller
             'telephone' => 'required',
             'regNumber' => 'required',
             'gender' => 'required|string',
-            'program_id' => 'required'
+            'program_id' => 'required',
+            'password' => 'required'
 
         ]);
-        if($request->user()->can('create-program'))
-{
 
+        if ($request->user()->can('create-student')) {
 
-        $student = Student::create([
-            'firstName' => $fields['firstName'],
-            'lastName' => $fields['lastName'],
-            'email' => $fields['email'],
-            'telephone' => $fields['telephone'],
-            'regNumber' => $fields['regNumber'],
-            'gender' => $fields['gender'],
-            'program_id'=>$fields['program_id'],
+            $student = Student::create([
+                'firstName' => $fields['firstName'],
+                'lastName' => $fields['lastName'],
+                'email' => $fields['email'],
+                'telephone' => $fields['telephone'],
+                'regNumber' => $fields['regNumber'],
+                'gender' => $fields['gender'],
+                'program_id' => $fields['program_id'],
+                'password' => Hash::make($fields['password'])
+            ]);
+            if ($is_api_request) {
 
-
-        ]);
-        if ($is_api_request) {
-
-        return [
-            'message' => 'student created!',
-            'student' => $student,
-            
-        ];
-    }
-    else{
-        return back()->with(['message', 'student created!']);
-    }
-    }
-
+                return [
+                    'message' => 'student created!',
+                    'student' => $student,
+                ];
+            } else {
+                return back()->with(['message', 'student created!']);
+            }
+        }
     }
 
     /**
@@ -94,7 +91,7 @@ class StudentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function student_show()
+    public function student_show()
     {
         $students = Student::all();
         // dd($departments);
@@ -103,9 +100,8 @@ class StudentController extends Controller
 
     public function show($id)
     {
-        $student=Student::find($id);
+        $student = Student::find($id);
         return $student;
-        
     }
 
     /**
@@ -128,16 +124,14 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $student=Student::find($id);
-        if($student){
-            $updates=$request->all();
+        $student = Student::find($id);
+        if ($student) {
+            $updates = $request->all();
             $student->update($updates);
             return $student;
-        }
-        else{
+        } else {
             return 'student not found';
         }
-
     }
 
     /**
@@ -148,16 +142,13 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        $student=Student::find($id);
-        if ($student)
-        {
+        $student = Student::find($id);
+        if ($student) {
             Student::destroy($id);
             return 'student deleted successfully';
-        }
-        else{
+        } else {
             return 'student not found';
         }
-        
     }
 
     public function remove($id, Request $request)

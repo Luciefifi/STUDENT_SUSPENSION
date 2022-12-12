@@ -54,7 +54,7 @@ class ProgramController extends Controller
      */
     public function store(Request $request)
     {
-
+        // dd($request->all());
         $is_api_request = $request->route()->getPrefix() === 'api';
         $fields = $request->validate([
             'program_name' => 'required|string',
@@ -69,23 +69,15 @@ class ProgramController extends Controller
 
             ]);
             if ($is_api_request) {
-            return [
-                'message' => 'program created!',
-                'program' => $program,
+                return [
+                    'message' => 'program created!',
+                    'program' => $program,
 
-            ];
-        }
-        else{
-            return back()->with(['message', 'program created!']);
-        }
-        }
-       
-
-        
-        
-        
-        
-        else {
+                ];
+            } else {
+                return back()->with(['message', 'program created!']);
+            }
+        } else {
             return [
                 'message' => 'you are not permitted to create department'
             ];
@@ -101,7 +93,7 @@ class ProgramController extends Controller
 
 
 
-     public function program_show()
+    public function program_show()
     {
         $programs = Program::all();
         // dd($departments);
@@ -166,7 +158,7 @@ class ProgramController extends Controller
         if ($request->user()->can('delete-program')) {
             $program = Program::find($id);
             if ($program) {
-               Program::destroy($id);
+                Program::destroy($id);
                 return back()->with(['message', 'program deleted!']);
             }
         }

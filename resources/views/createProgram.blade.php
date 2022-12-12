@@ -15,11 +15,11 @@
         <div class="card-body">
             <div class="basic-form">
 
-                <form  action='{{ route("department.add")}}' method ="POST" >
+                <form  action='{{ route("program.add")}}' method ="POST" >
                 @csrf
                     <div class="form-group">
                         <label>program name</label>
-                        <input type="text" class="form-control" placeholder="program name">
+                        <input type="text" class="form-control" placeholder="program name" name="program_name">
                     </div>
 
                     

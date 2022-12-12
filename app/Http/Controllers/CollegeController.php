@@ -166,12 +166,12 @@ class CollegeController extends Controller
     {
         $id = $request->id;
         $fields = $request->validate([
-            'name' => 'required|string|unique:colleges,name',
+            'name' => 'required|string',
 
         ]);
         $college = College::find($id);
         $college->name = $fields['name'];
         $college->update();
-         return redirect('colleges')->with(['message','college updated']);
+        return redirect('colleges')->with(['message', 'college updated']);
     }
 }

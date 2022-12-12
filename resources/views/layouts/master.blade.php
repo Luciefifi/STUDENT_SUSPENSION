@@ -51,7 +51,7 @@
                         </ul>
                     </li>
 
-
+                        @role('Admin')
                     <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Colleges <span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
                             <li><a href="/colleges">All colleges</a></li>
@@ -68,7 +68,13 @@
 
                         
                         </ul>
+                        @endrole
 
+
+
+                       
+                        @hasanyrole('Admin|HOD')
+                        
                         <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Departments <span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
                             <li><a href="/departments">All Departments</a></li>
@@ -76,9 +82,7 @@
 
                         
                         </ul>
-
-
-                        <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Programs <span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                         <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Programs <span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
                             <li><a href="/programs">All Programs</a></li>
                             <li><a href="/createProgram">create Program</a></li>
@@ -92,8 +96,9 @@
                             <li><a href="/createStudent">create Student</a></li>
 
                         
-                        </ul>
-
+                        </ul> 
+                        @endhasanyrole
+                        @role('Admin')
 
                         <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> Users<span class="sidebar-collapse-icon ti-angle-down"></span></a>
                         <ul>
@@ -102,12 +107,21 @@
 
                         
                         </ul>
+                        @endrole
+                        @role('student')
+                        <li><a class="sidebar-sub-toggle"><i class="ti-layout"></i> suspension<span class="sidebar-collapse-icon ti-angle-down"></span></a>
+                        <ul>
+                            <li><a href="/suspension">request suspension</a></li>
+                            <li><a href="/progress">progress</a></li>
 
+                        
+                        </ul>
+                        @endrole
             
                 </ul>
                 </li>
 
-                <li><a><i class="ti-close"></i> Logout</a></li>
+                
                 </ul>
             </div>
         </div>
@@ -125,188 +139,34 @@
                             <span class="line"></span>
                         </div>
                     </div>
-                    <!-- <div class="float-right">
+                    <div class="float-right">
+                       
+                       
                         <div class="dropdown dib">
                             <div class="header-icon" data-toggle="dropdown">
-                                <i class="ti-bell"></i>
-                                <div class="drop-down dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-content-heading">
-                                        <span class="text-left">Recent Notifications</span>
-                                    </div>
-                                    <div class="dropdown-content-body">
-                                        <ul>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="{{asset('images/avatar/3.jpg')}}" alt="" />
-                                                    <div class="notification-content">
-                                                        <small class="notification-timestamp pull-right">02:34
-                                                            PM</small>
-                                                        <div class="notification-heading">Mr. John</div>
-                                                        <div class="notification-text">5 members joined today </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="{{asset('images/avatar/3.jpg')}}" alt="" />
-                                                    <div class="notification-content">
-                                                        <small class="notification-timestamp pull-right">02:34
-                                                            PM</small>
-                                                        <div class="notification-heading">Mariam</div>
-                                                        <div class="notification-text">likes a photo of you</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="{{asset('images/avatar/3.jpg')}}" alt="" />
-                                                    <div class="notification-content">
-                                                        <small class="notification-timestamp pull-right">02:34
-                                                            PM</small>
-                                                        <div class="notification-heading">Tasnim</div>
-                                                        <div class="notification-text">Hi Teddy, Just wanted to let you
-                                                            ...</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="{{asset('images/avatar/3.jpg')}}" alt="" />
-                                                    <div class="notification-content">
-                                                        <small class="notification-timestamp pull-right">02:34
-                                                            PM</small>
-                                                        <div class="notification-heading">Mr. John</div>
-                                                        <div class="notification-text">Hi Teddy, Just wanted to let you
-                                                            ...</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li class="text-center">
-                                                <a href="#" class="more-link">See All</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dropdown dib">
-                            <div class="header-icon" data-toggle="dropdown">
-                                <i class="ti-email"></i>
-                                <div class="drop-down dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-content-heading">
-                                        <span class="text-left">2 New Messages</span>
-                                        <a href="email.html">
-                                            <i class="ti-pencil-alt pull-right"></i>
-                                        </a>
-                                    </div>
-                                    <div class="dropdown-content-body">
-                                        <ul>
-                                            <li class="notification-unread">
-                                                <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="{{asset('images/avatar/1.jpg')}}" alt="" />
-                                                    <div class="notification-content">
-                                                        <small class="notification-timestamp pull-right">02:34
-                                                            PM</small>
-                                                        <div class="notification-heading">Michael Qin</div>
-                                                        <div class="notification-text">Hi Teddy, Just wanted to let you
-                                                            ...</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li class="notification-unread">
-                                                <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="{{asset('images/avatar/2.jpg')}}" alt="" />
-                                                    <div class="notification-content">
-                                                        <small class="notification-timestamp pull-right">02:34
-                                                            PM</small>
-                                                        <div class="notification-heading">Mr. John</div>
-                                                        <div class="notification-text">Hi Teddy, Just wanted to let you
-                                                            ...</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="{{asset('images/avatar/3.jpg')}}" alt="" />
-                                                    <div class="notification-content">
-                                                        <small class="notification-timestamp pull-right">02:34
-                                                            PM</small>
-                                                        <div class="notification-heading">Michael Qin</div>
-                                                        <div class="notification-text">Hi Teddy, Just wanted to let you
-                                                            ...</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <img class="pull-left m-r-10 avatar-img" src="{{asset('images/avatar/2.jpg')}}" alt="" />
-                                                    <div class="notification-content">
-                                                        <small class="notification-timestamp pull-right">02:34
-                                                            PM</small>
-                                                        <div class="notification-heading">Mr. John</div>
-                                                        <div class="notification-text">Hi Teddy, Just wanted to let you
-                                                            ...</div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li class="text-center">
-                                                <a href="#" class="more-link">See All</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dropdown dib">
-                            <div class="header-icon" data-toggle="dropdown">
-                                <span class="user-avatar">John
+                                <span class="user-avatar">{{ Auth::user()->name }}
                                     <i class="ti-angle-down f-s-10"></i>
                                 </span>
                                 <div class="drop-down dropdown-profile dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-content-heading">
-                                        <span class="text-left">Upgrade Now</span>
-                                        <p class="trial-day">30 Days Trail</p>
-                                    </div>
+                                    
                                     <div class="dropdown-content-body">
-                                        <ul>
+                                        <ul>                                            
                                             <li>
-                                                <a href="#">
-                                                    <i class="ti-user"></i>
-                                                    <span>Profile</span>
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="#">
-                                                    <i class="ti-email"></i>
-                                                    <span>Inbox</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="ti-settings"></i>
-                                                    <span>Setting</span>
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="#">
-                                                    <i class="ti-lock"></i>
-                                                    <span>Lock Screen</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="ti-power-off"></i>
-                                                    <span>Logout</span>
-                                                </a>
+                                                <form id ="logout-form" action="{{route('logout')}}" method="POST" style="display:none;">
+                                                @csrf
+                                                </form>
+                                                  
+                                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">
+                                                        <i class="ti-power-off"></i>
+                                                        <span>Logout</span>
+                                                    </a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div> 
                 </div>
             </div>
         </div>
