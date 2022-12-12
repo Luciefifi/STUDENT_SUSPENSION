@@ -40,7 +40,7 @@
 
                             <td class="color-primary">
                                 <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
+                                <a href="/users/{{ $user->id }}" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</a>
 
                             </td>
                         </tr>

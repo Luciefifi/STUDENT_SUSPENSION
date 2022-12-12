@@ -25,47 +25,41 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th>FName</th>
+                            <th>LName</th>
                             <th>Email</th>
-                            <th>Registration Number</th>
-                            <th>Telephone</th>
+                            <th>Reg. no</th>
+                            <!-- <th>Level</th> -->
+                            <th>school</th>
+                            <th>department</th>
+                            <th>program</th>
+                            <th>phone</th>
                             <th>gender</th>
                             <th>Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach ($students as $student)
                         <tr>
-                            <th scope="row">1</th>
-                            <td></td>
-
+                            <th scope="row">{{ $student->id }}</th>
+                            <td> {{ $student->school->school_name }} </td>
+                        <td> {{ $student->department->department_name }}</td>
+                        <td>{{$student-> program->program_name}}</td>
+                        <td>{{$student->firstName}}</td>
+                        <td>{{$student->lastName}}</td>
+                        <td>{{$student->email}}</td>
+                        <td>{{$student->regNumber}}</td>
+                        <td>{{$student->telephone}}</td>
+                        <td>{{$student->gender}}</td>
                             <td class="color-primary">
                                 <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
+                                <a href="/Students/{{ $student->id }}" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</a>
 
                             </td>
+                        
                         </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td></td>
-
-                            <td class="color-primary">
-                                <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td></td>
-
-                            <td class="color-primary">
-                                <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
-
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

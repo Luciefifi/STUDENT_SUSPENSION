@@ -30,7 +30,7 @@
 
                             <td class="color-primary">
                                 
-                                <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
+                                <a href="/colleges/{{ $college->id }}/update" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</a>
                                 <a href="/colleges/{{ $college->id }}"  class="btn btn-danger btn-outline m-b-10 m-l-5"> Delete</a>
                             </td>
                         </tr>

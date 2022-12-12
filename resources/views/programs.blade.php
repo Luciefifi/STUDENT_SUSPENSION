@@ -17,40 +17,31 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
+
+                            <th>school</th>
+                            <th>department</th>
+                            <th> program Name</th>
                             <th>Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
+
+                    @foreach ($programs as $program)
                         <tr>
-                            <th scope="row">1</th>
-                            <td>computer engineering</td>
+                        <th scope="row"> {{ $program->id }} </th>
+                        <td> {{ $program->school->school_name }} </td>
+                        <td> {{ $program->department->department_name }}</td>
+                        <td>{{$program->program_name}}</td>
 
                             <td class="color-primary">
                                 <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
+                                <a href="/programs/{{ $program->id }}" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</a>
 
                             </td>
                         </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>computer engineering</td>
-                            <td class="color-primary">
-                                <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>computer engineering</td>
-                            <td class="color-primary">
-                                <button type="button" class="btn btn-primary btn-outline m-b-10 m-l-5">Update</button>
-                                <button type="button" class="btn btn-danger btn-outline m-b-10 m-l-5">Delete</button>
-
-                            </td>
-                        </tr>
+                        @endforeach
+                       
                     </tbody>
                 </table>
             </div>

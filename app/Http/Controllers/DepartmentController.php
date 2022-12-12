@@ -12,7 +12,7 @@ class DepartmentController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['role:admin|HOD|student']);
+        $this->middleware(['role:Admin|HOD|student']);
     }
     /**
      * Display a listing of the resource.
@@ -20,22 +20,25 @@ class DepartmentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
-     
-public function school_create()
-{
-
-    $colleges=College::all();
     
-    return view('createSchool',compact('colleges'));
-}
+     
+// public function school_create()
+// {
+
+//     $colleges=College::all();
+    
+//     return view('createSchool',compact('colleges'));
+// }
 
 public function department_create()
 {
-    $schools=School::all();
+    $colleges=College::all();
+    $schools = School::all();
     
-    return view('createDepartment',compact('schools'));  
+    return view('createDepartment',compact('schools' , 'colleges'));  
 }
+
+
     public function index()
     {
         return Department::all();
@@ -65,6 +68,9 @@ public function department_create()
      */
     public function store(Request $request)
     {
+
+        $is_api_request = $request->route()->getPrefix() === 'api';
+
         $department = $request->validate([
             'department_name' => 'required|string',
             'school_id' => 'required'
@@ -80,11 +86,17 @@ public function department_create()
 
             ]);
 
-            return [
-                'message' => 'department created!',
-                'department' => $department,
+            if ($is_api_request) {
+                return [
+                    'message' => 'department created!',
+                    'department' => $department,
+    
+                ];
+            } else {
+                return back()->with(['message', 'college created!']);
+            }
 
-            ];
+           
         } else {
             return [
                 'message' => 'you are not allowed to create department '
@@ -103,6 +115,7 @@ public function department_create()
     public function department_show()
     {
         $departments = Department::all();
+        // dd($departments);
         return view('departments', compact('departments'));
     }
     public function show($id)
@@ -156,6 +169,17 @@ public function department_create()
             return 'department deleted successfully';
         } else {
             return 'department not found';
+        }
+    }
+
+    public function remove($id, Request $request)
+    {
+        if ($request->user()->can('delete-department')) {
+            $department = Department::find($id);
+            if ($department) {
+                Department::destroy($id);
+                return back()->with(['message', 'department deleted!']);
+            }
         }
     }
 }

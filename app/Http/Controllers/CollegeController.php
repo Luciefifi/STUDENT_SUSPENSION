@@ -154,4 +154,24 @@ class CollegeController extends Controller
             }
         }
     }
+
+    public function update_show($id)
+    {
+        $college = College::find($id);
+
+        return view('collegeUpdate', compact('college'));
+    }
+
+    public function updated(Request $request)
+    {
+        $id = $request->id;
+        $fields = $request->validate([
+            'name' => 'required|string|unique:colleges,name',
+
+        ]);
+        $college = College::find($id);
+        $college->name = $fields['name'];
+        $college->update();
+         return redirect('colleges')->with(['message','college updated']);
+    }
 }

@@ -177,4 +177,15 @@ class UserController extends Controller
             return redirect('/admin');
     }
     }
+
+    public function remove($id, Request $request)
+    {
+        if ($request->user()->can('delete-user')) {
+            $user = User::find($id);
+            if ($user) {
+                User::destroy($id);
+                return back()->with(['message', 'user deleted!']);
+            }
+        }
+    }
 }
